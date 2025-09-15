@@ -18,8 +18,9 @@ header {
 }
 
 header .logo {
+    font-family: "Monteserrat", sans-serif;
+    font-weight: 700;
     font-size: 1.5em;
-    font-weight: bold;
 }
 
 nav ul {
@@ -45,7 +46,7 @@ nav a:hover {
 .hero {
     text-align: center;
     background: url("images/restaurant.jpg") no-repeat center center/cover;
-    color: white;
+    color: black;
     padding: 120px 20px;
 }
 
@@ -62,8 +63,8 @@ nav a:hover {
 .btn {
     display: inline-block;
     padding: 12px 24px;
-    background: #FFD700;
-    color: #8B0000;
+    background: #8c0000;
+    color: white;
     font-weight: bold;
     text-decoration: none;
     border-radius: 8px;
@@ -71,7 +72,7 @@ nav a:hover {
 }
 
 .btn:hover {
-    background: #FFA500;
+    background: #590000;
 }
 
 /* Секции */
@@ -118,3 +119,6 @@ footer {
     text-align: center;
     padding: 15px;
 }
+
+/* Fonts */
+
