@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меню | Ресторан "Chester"</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="logo">Chester</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html" class="active">Меню</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="address">
+        <h1>В какой ресторан вы хотите заказать?</h1>
+        <div class="custom-select">
+        <label for="rest-select">Ресторан</label>
+        <select name="rest" id="rest-select">
+            <option value="">-- Выберите адрес --</option>
+            <option value="">Тишинка д.17</option>
+            <option value="">Сретенка д.26</option>
+            <option value="">Гряземуть д.5</option>
+            <option value="">Проспект Мира д.122</option>
+        </select>
+        </div>
+        <p id="result"></p>
+    </section>
+
+    <!-- Заголовок -->
+    <section class="hero small-hero">
+        <h1>Меню ресторана</h1>
+        <p>Выберите блюдо по вкусу</p>
+    </section>
+
+    <!-- Меню -->
+    <section class="menu">
+        <h2>Закуски</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="images/bruschetta.jpg" alt="Брускетта">
+                <h3>Брускетта</h3>
+                <p>Хрустящий хлеб с томатами, базиликом и оливковым маслом.</p>
+                <span class="price">350 ₽</span>
+            </div>
+            <div class="menu-item">
+                <img src="images/salad.jpg" alt="Салат Цезарь">
+                <h3>Салат Цезарь</h3>
+                <p>Курица, сухарики, сыр пармезан и фирменный соус.</p>
+                <span class="price">420 ₽</span>
+            </div>
+        </div>
+
+        <h2>Горячее</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="images/pizza.jpg" alt="Пицца Маргарита">
+                <h3>Пицца Маргарита</h3>
+                <p>Тонкое тесто, соус, сыр моцарелла и свежие томаты.</p>
+                <span class="price">590 ₽</span>
+            </div>
+            <div class="menu-item">
+                <img src="images/pasta.jpg" alt="Паста Карбонара">
+                <h3>Паста Карбонара</h3>
+                <p>Спагетти с беконом, сливочным соусом и пармезаном.</p>
+                <span class="price">640 ₽</span>
+            </div>
+        </div>
+
+        <h2>Десерты</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="images/tiramisu.jpg" alt="Тирамису">
+                <h3>Тирамису</h3>
+                <p>Итальянский десерт с кофе, маскарпоне и какао.</p>
+                <span class="price">370 ₽</span>
+            </div>
+            <div class="menu-item">
+                <img src="images/cheesecake.jpg" alt="Чизкейк">
+                <h3>Чизкейк</h3>
+                <p>Нежный сливочный десерт с основой из печенья.</p>
+                <span class="price">390 ₽</span>
+            </div>
+        </div>
+
+        <h2>Напитки</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="images/coffee.jpg" alt="Капучино">
+                <h3>Капучино</h3>
+                <p>Ароматный кофе с молочной пенкой.</p>
+                <span class="price">220 ₽</span>
+            </div>
+            <div class="menu-item">
+                <img src="images/wine.jpg" alt="Красное вино">
+                <h3>Красное вино</h3>
+                <p>Итальянское вино из региона Тоскана.</p>
+                <span class="price">490 ₽</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <p>&copy; 2025 Ресторан "Chester". Все права защищены.</p>
+    </footer>
+</body>
+</html>
