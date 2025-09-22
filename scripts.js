@@ -1,4 +1,3 @@
-<script>
 document.getElementById("address").addEventListener("change", function() {
     let result = document.getElementById("result");
     if (this.value) {
@@ -7,4 +6,3 @@ document.getElementById("address").addEventListener("change", function() {
         result.textContent = "";
     }
 });
-</script>
