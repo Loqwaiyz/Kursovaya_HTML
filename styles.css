@@ -160,6 +160,122 @@ nav.active {
     background: #590000;
 }
 
+/* ТЕСТОВЫЕ КНОПКИ ДЛЯ ПРАКТИКИ*/
+
+.test-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin: 80px 0;
+  flex-wrap: wrap;
+}
+
+/* Общие базовые стили */
+.test-buttons button {
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 28px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* ====== 1. Подъём при наведении ====== */
+.test-btn1 {
+  background-color: #8e44ad;
+}
+.test-btn1:hover {
+  transform: translateY(-5px);
+  background-color: #9b59b6;
+}
+
+/* ====== 2. Скользящая подсветка ====== */
+.test-btn2 {
+  background-color: #e67e22;
+}
+.test-btn2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  transition: left 0.4s ease;
+}
+.test-btn2:hover::before {
+  left: 100%;
+}
+
+/* ====== 3. Рамка при наведении ====== */
+.test-btn3 {
+  background-color: #16a085;
+}
+.test-btn3::before,
+.test-btn3::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+}
+.test-btn3::before {
+  top: 0;
+  left: 0;
+}
+.test-btn3::after {
+  bottom: 0;
+  right: 0;
+}
+.test-btn3:hover::before,
+.test-btn3:hover::after {
+  width: 100%;
+}
+.test-btn3:hover {
+  transform: scale(1.05);
+  background-color: #1abc9c;
+}
+
+/* ====== 4. Вращающийся градиент ====== */
+.test-btn4 {
+  background-color: #8e44ad;
+  z-index: 1;
+}
+.test-btn4::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 180deg, #ff6f61, #f1c40f, #16a085, #9b59b6, #ff6f61);
+  transform: rotate(0deg);
+  transition: transform 0.6s linear;
+  z-index: 0;
+}
+.test-btn4::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background-color: #8e44ad;
+  border-radius: 8px;
+  z-index: 1;
+}
+.test-btn4:hover::before {
+  transform: rotate(360deg);
+}
+.test-btn4:hover {
+  transform: scale(1.05);
+}
+
+
 /* Секции */
 section {
     padding: 60px 10%;
