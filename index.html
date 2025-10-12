@@ -13,7 +13,16 @@
     <!-- Шапка сайта -->
     <header>
         <div class="logo">Chester</div>
-        <nav>
+
+        <!-- Бургер -->
+        <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Меню -->
+        <nav id="menu">
             <ul>
                 <li><a href="index.html" class="active">Главная</a></li>
                 <li><a href="menu.html">Меню</a></li>
@@ -35,8 +44,7 @@
     <section class="about">
         <h2>О нашем ресторане</h2>
         <p>
-            В "Chester" мы готовим самые калорийные блюда.
-            Бонусом, люди весом больше 120 кг едят бесплатно
+            В "Chester" мы готовим блюда с разных уголков мира.
         </p>
     </section>
 
@@ -49,11 +57,11 @@
                 <h3>Пицца Маргарита</h3>
             </div>
             <div class="card">
-                <img src="shayrma.jpg" alt="Паста Карбонара">
+                <img src="shayrma.jpg" alt="Шаурма">
                 <h3>Шаурма</h3>
             </div>
             <div class="card">
-                <img src="shake2.jpg" alt="Тирамису">
+                <img src="shake2.jpg" alt="Орео Шейк">
                 <h3>Орео Шейк</h3>
             </div>
         </div>
@@ -63,5 +71,24 @@
     <footer>
         <p>&copy; 2025 Ресторан "Chester". Все права защищены.</p>
     </footer>
+
+    <!-- Скрипт бургер-меню -->
+    <script>
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('menu');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+
+        // Закрытие меню при клике на пункт (на мобильных)
+        document.querySelectorAll('#menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                menu.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
