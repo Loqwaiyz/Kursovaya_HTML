@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас | Ресторан "Chester"</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header>
+        <div class="logo">Chester</div>
+
+        <!-- Бургер -->
+        <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Меню -->
+        <nav id="menu">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="about.html" class="active">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Герой-секция -->
+    <section class="hero small-hero">
+        <h1>О ресторане "Chester"</h1>
+        <p>Калорийно. Вкусно. Незабываемо.</p>
+    </section>
+
+    <!-- О нас -->
+    <section class="about-section">
+        <div class="about-content">
+            <img src="images/restaurant.jpg" alt="Интерьер ресторана Chester" class="about-image">
+            <div class="about-text">
+                <h2>Наша история</h2>
+                <p>
+                    Ресторан <strong>"Chester"</strong> появился из любви к настоящей итальянской еде и тёплой атмосфере общения. 
+                    Мы начали как небольшой ресторан в центре города, а теперь — это уютное место, 
+                    где каждый гость может насладиться любимыми блюдами, приготовленными с душой.
+                </p>
+
+                <h2>Наш подход</h2>
+                <p>
+                    Мы верим, что вкус — в простоте. Используем только свежие продукты, 
+                    подаём щедрые порции и не экономим на соусах. 
+                    Наша цель — чтобы каждый уходил с полным желудком и хорошим настроением.
+                </p>
+
+                <h2>Интересный факт</h2>
+                <p>
+                    В "Chester" действует необычное правило: <strong>гости с пропиской в Италии едят бесплатно</strong>.  
+                    Мы любим своих клиентов и ценим чувство юмора!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Команда -->
+    <section class="team">
+        <h2>Наша команда</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="oguzok.jpg" alt="Шеф-повар">
+                <h3>Александр Честер</h3>
+                <p>Основатель и главный шеф</p>
+            </div>
+            <div class="team-member">
+                <img src="jane.jpg" alt="Менеджер">
+                <h3>Марина Лукьяненко</h3>
+                <p>Менеджер ресторана</p>
+            </div>
+            <div class="team-member">
+                <img src="barista.png" alt="Бариста">
+                <h3>Илья Гардороб</h3>
+                <p>Главный бариста</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Как к нам попасть?</h2>
+        <video width="320" height="240" controls>
+            <source src="movie.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <p>&copy; 2025 Ресторан "Chester". Все права защищены.</p>
+    </footer>
+
+    <!-- Скрипт бургер-меню -->
+    <script>
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('menu');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('#menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                menu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
