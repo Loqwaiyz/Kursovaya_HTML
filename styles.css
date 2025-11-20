@@ -163,6 +163,7 @@ nav.active {
 /* ТЕСТОВЫЕ КНОПКИ ДЛЯ ПРАКТИКИ*/
 
 .test-buttons {
+    padding: 5px;
   display: flex;
   gap: 20px;
   justify-content: center;
@@ -657,6 +658,29 @@ section {
 .checkmark.show {
     opacity: 1;
     transform: scale(1);
+}
+
+.like-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.like-btn {
+    font-size: 20px;
+    padding: 15px 40px;
+    background: white;
+    border: 2px solid #ff4a4a;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.like-btn.active {
+    background: #ff4a4a;
+    color: white;
+    border-color: #ff4a4a;
+    transform: scale(1.05);
 }
 
 
