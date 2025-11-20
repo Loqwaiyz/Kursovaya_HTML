@@ -91,6 +91,39 @@
         </div>
     </section>
 
+    <section class="Draw">
+    <button> Рисование
+        <script>
+// Задание 4: создание следов за курсором
+let drawing = false;
+
+document.addEventListener("click", () => {
+    drawing = !drawing; // включение / выключение
+});
+
+document.addEventListener("mousemove", (e) => {
+    if (!drawing) return;
+
+    const dot = document.createElement("div");
+    dot.style.position = "absolute";
+    dot.style.width = "20px";
+    dot.style.height = "20px";
+    dot.style.background = "black";
+    dot.style.borderRadius = "50%";
+    dot.style.left = e.pageX + "px";
+    dot.style.top = e.pageY + "px";
+    dot.style.pointerEvents = "none";
+    dot.style.opacity = "0.8";
+    dot.style.transform = "translate(-50%, -50%)";
+    document.body.appendChild(dot);
+
+    setTimeout(() => dot.remove(), 500);
+});
+</script>
+</section>
+
+    </button>
+
     <section>
         <h2>Как к нам попасть?</h2>
         <video width="320" height="240" controls>
