@@ -9,6 +9,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
+
+<script>
+// ЗАДАНИЕ 1: Регистрация
+if (confirm("Желаете пройти регистрацию на сайте?")) {
+    alert("Круто!");
+} else {
+    alert("Попробуй ещё раз.");
+}
+</script>
+
+<script>
+// ЗАДАНИЕ 2: Логин и пароль через prompt
+
+let login = prompt("Введите логин:");
+
+if (login === null || login === "") {
+    alert("Отменено");
+} else if (login === "Админ") {
+
+    let pass = prompt("Введите пароль:");
+
+    if (pass === null || pass === "") {
+        alert("Отменено");
+    } else if (pass === "Я главный") {
+        alert("Здравствуйте!");
+    } else {
+        alert("Неверный пароль");
+    }
+
+} else {
+    alert("Я вас не знаю");
+}
+</script>
+
+
 <body>
     <!-- Шапка сайта -->
     <header>
