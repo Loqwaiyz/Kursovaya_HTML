@@ -75,6 +75,26 @@
         <p>Выберите блюдо по вкусу</p>
     </section>
 
+    <script>
+    function Accumulator(startingValue) {
+        this.value = startingValue;
+
+        this.read = function() {
+            let number = +prompt("Введите число:", 0);
+            if (!isNaN(number)) {
+                this.value += number;
+            }
+        };
+    }
+
+    let acc = new Accumulator(10);
+    acc.read();
+    acc.read();
+    alert(acc.value);
+
+
+    </script>
+
     <!-- Меню -->
     <section class="menu">
         <h2>Закуски</h2>
