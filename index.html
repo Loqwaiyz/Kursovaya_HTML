@@ -43,6 +43,160 @@ if (login === null || login === "") {
 }
 </script>
 
+<!-- CAPTCHA: letters -> if wrong -> math captcha -->
+<div id="captchaWrap" style="max-width:440px">
+  <div id="captchaBox" style="margin-bottom:8px; font-weight:600;"></div>
+
+  <input id="captchaInput" type="text" placeholder="Введите капчу" autocomplete="off"
+         style="padding:8px 10px; width:100%; box-sizing:border-box; margin-bottom:8px;" />
+
+  <div style="display:flex; gap:8px; align-items:center">
+    <button id="checkBtn" type="button" style="padding:8px 12px">Проверить</button>
+    <button id="sendBtn" disabled type="button" style="padding:8px 12px">Отправить</button>
+    <button id="refreshBtn" type="button" style="padding:8px 12px">Обновить капчу</button>
+  </div>
+
+  <div id="error" style="color:#b00020; margin-top:10px; min-height:1.2em;"></div>
+</div>
+
+<script>
+/* утилита: возвращает true, если объект пустой */
+function isEmpty(obj) {
+  for (let k in obj) return false;
+  return true;
+}
+
+/* Элементы */
+const captchaBox = document.getElementById('captchaBox');
+const input = document.getElementById('captchaInput');
+const checkBtn = document.getElementById('checkBtn');
+const sendBtn = document.getElementById('sendBtn');
+const refreshBtn = document.getElementById('refreshBtn');
+const errorDiv = document.getElementById('error');
+
+let currentCaptcha = '';
+let mode = 'letters'; // 'letters' или 'math'
+
+/* Генерация буквенной капчи (смешанный регистр, без похожих символов) */
+function generateLettersCaptcha(len = 5) {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz'; // без 0 O I l
+  let s = '';
+  for (let i = 0; i < len; i++) {
+    s += chars[Math.floor(Math.random() * chars.length)];
+  }
+  currentCaptcha = s;
+  mode = 'letters';
+  captchaBox.textContent = `Введите символы (учёт регистра): ${s}`;
+  input.value = '';
+  errorDiv.textContent = '';
+  sendBtn.disabled = true;
+  input.focus();
+}
+
+/* Генерация математической капчи: N + M */
+function generateMathCaptcha() {
+  const a = Math.floor(Math.random() * 9) + 1; // 1..9
+  const b = Math.floor(Math.random() * 9) + 1;
+  currentCaptcha = String(a + b); // ответ в виде строки
+  mode = 'math';
+  captchaBox.textContent = `Решите пример: ${a} + ${b} = ?`;
+  input.value = '';
+  errorDiv.textContent = '';
+  sendBtn.disabled = true;
+  input.focus();
+}
+
+/* обновить капчу (по умолчанию - буквенная) */
+function refreshCaptcha() {
+  generateLettersCaptcha();
+}
+
+/* Проверка ввода.
+   Для букв: проверяем только если длина ввода === длине капчи (чтобы не ругаться по первому символу).
+   Для числовой: можно проверять при любом вводе, но лучше при нажатии "Проверить" или когда строка не пустая.
+*/
+function validateInputTry() {
+  const val = input.value.trim();
+
+  // защита: пустой ввод
+  if (val === '') {
+    errorDiv.textContent = '';
+    sendBtn.disabled = true;
+    return;
+  }
+
+  if (mode === 'letters') {
+    // сравнение строгое, с учётом регистра
+    if (val.length < currentCaptcha.length) {
+      // ещё рано — не показываем ошибку
+      errorDiv.textContent = '';
+      sendBtn.disabled = true;
+      return;
+    }
+
+    if (val === currentCaptcha) {
+      errorDiv.style.color = 'green';
+      errorDiv.textContent = 'Капча введена верно — можно отправлять.';
+      sendBtn.disabled = false;
+    } else {
+      // неверно — переключаем на математическую капчу
+      errorDiv.style.color = '#b00020';
+      errorDiv.textContent = 'Неверно! Переходим к математической капче...';
+      sendBtn.disabled = true;
+
+      // небольшая пауза — чтобы пользователь увидел сообщение, затем сменим капчу
+      setTimeout(() => {
+        generateMathCaptcha();
+      }, 900);
+    }
+  } else if (mode === 'math') {
+    // для math: сравнить численно (позволяем вводить пробелы)
+    if (val === currentCaptcha) {
+      errorDiv.style.color = 'green';
+      errorDiv.textContent = 'Капча пройдена — можно отправлять.';
+      sendBtn.disabled = false;
+    } else {
+      errorDiv.style.color = '#b00020';
+      errorDiv.textContent = 'Неверный ответ. Попробуйте снова или обновите капчу.';
+      sendBtn.disabled = true;
+      // не переключаем обратно автоматически — даём шанс попробовать ещё раз
+    }
+  }
+}
+
+/* Обработчики */
+input.addEventListener('input', () => {
+  // при вводе не валидируем немедленно, только вызываем "предпроверку" (validateInputTry)
+  validateInputTry();
+});
+
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    // нажали Enter — проверьте сейчас
+    e.preventDefault();
+    validateInputTry();
+  }
+});
+
+checkBtn.addEventListener('click', () => {
+  validateInputTry();
+});
+
+refreshBtn.addEventListener('click', () => {
+  refreshCaptcha();
+});
+
+/* Пример "отправки" */
+sendBtn.addEventListener('click', () => {
+  alert('Форма отправлена (симуляция).');
+  // после отправки можно обновить капчу
+  generateLettersCaptcha();
+});
+
+/* Инициализация первой капчи */
+generateLettersCaptcha();
+</script>
+
 
 <body>
     <!-- Шапка сайта -->
