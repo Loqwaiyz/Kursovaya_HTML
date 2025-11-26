@@ -43,7 +43,7 @@ if (login === null || login === "") {
 }
 </script>
 
-<!-- CAPTCHA: letters -> if wrong -> math captcha -->
+<!-- CAPTCHA -->
 <div id="captchaWrap" style="max-width:440px">
   <div id="captchaBox" style="margin-bottom:8px; font-weight:600;"></div>
 
@@ -79,7 +79,7 @@ let mode = 'letters'; // 'letters' или 'math'
 
 /* Генерация буквенной капчи (смешанный регистр, без похожих символов) */
 function generateLettersCaptcha(len = 5) {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz'; // без 0 O I l
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz';
   let s = '';
   for (let i = 0; i < len; i++) {
     s += chars[Math.floor(Math.random() * chars.length)];
@@ -128,7 +128,6 @@ function validateInputTry() {
   if (mode === 'letters') {
     // сравнение строгое, с учётом регистра
     if (val.length < currentCaptcha.length) {
-      // ещё рано — не показываем ошибку
       errorDiv.textContent = '';
       sendBtn.disabled = true;
       return;
@@ -188,7 +187,7 @@ refreshBtn.addEventListener('click', () => {
 
 /* Пример "отправки" */
 sendBtn.addEventListener('click', () => {
-  alert('Форма отправлена (симуляция).');
+  alert('Форма отправлена');
   // после отправки можно обновить капчу
   generateLettersCaptcha();
 });
