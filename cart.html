@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина | Chester</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    
+</head>
+<body>
+
+<header>
+    <div class="logo">Chester</div>
+
+    <!-- бургер -->
+    <div class="burger" id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav id="menu">
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="menu.html">Меню</a></li>
+            <li><a href="about.html">О нас</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="cart.html" class="active">Корзина</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="cart-container">
+    <div class="cart-title">Ваша корзина</div>
+
+    <div id="cartList"></div>
+
+    <div class="total" id="totalPrice">Итого: 0 ₽</div>
+
+    <a href="payment.html" class="checkout-btn">Оформить заказ</a>
+</div>
+
+
+<script>
+/* Корзина в localStorage */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* Элемент контейнера */
+const cartList = document.getElementById("cartList");
+const totalPriceEl = document.getElementById("totalPrice");
+
+/* Рендер корзины */
+function renderCart() {
+
+    cartList.innerHTML = "";
+
+    if (cart.length === 0) {
+        cartList.innerHTML = "<div class='empty'>Корзина пуста</div>";
+        totalPriceEl.textContent = "Итого: 0 ₽";
+        return;
+    }
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+
+        total += item.price * item.qty;
+
+        const card = `
+        <div class="cart-item">
+            <img src="${item.image}">
+            
+            <div class="cart-info">
+                <h3>${item.name}</h3>
+                <div class="price">${item.price} ₽</div>
+            </div>
+
+            <div class="qty-box">
+                <button onclick="changeQty(${index}, -1)">-</button>
+                <span>${item.qty}</span>
+                <button onclick="changeQty(${index}, 1)">+</button>
+            </div>
+
+            <button class="delete-btn" onclick="removeItem(${index})">×</button>
+        </div>
+        `;
+
+        cartList.innerHTML += card;
+    });
+
+    totalPriceEl.textContent = `Итого: ${total} ₽`;
+}
+
+/* Изменение количества */
+function changeQty(index, delta) {
+    cart[index].qty += delta;
+
+    if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+    }
+
+    saveCart();
+    renderCart();
+}
+
+/* Удаление товара */
+function removeItem(index) {
+    cart.splice(index, 1);
+    saveCart();
+    renderCart();
+}
+
+/* Сохранение */
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+/* Инициализация */
+renderCart();
+
+
+/* Бургер меню */
+const burger = document.getElementById("burger");
+const menu = document.getElementById("menu");
+
+burger.onclick = () => {
+    burger.classList.toggle("active");
+    menu.classList.toggle("active");
+};
+</script>
+
+</body>
+</html>
