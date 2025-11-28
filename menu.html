@@ -78,6 +78,33 @@
         <p>Выберите блюдо по вкусу</p>
     </section>
 
+    <!-- Фильтры -->>
+    <section class="filter-box">
+    <h2>Фильтр блюд</h2>
+
+    <div class="filter-row">
+        <label>Цена от:</label>
+        <input type="number" id="price-min" placeholder="0">
+    </div>
+
+    <div class="filter-row">
+        <label>Цена до:</label>
+        <input type="number" id="price-max" placeholder="9999">
+    </div>
+
+    <div class="filter-row">
+        <label>Сортировка:</label>
+        <select id="sort-select">
+            <option value="none">Без сортировки</option>
+            <option value="asc">По возрастанию</option>
+            <option value="desc">По убыванию</option>
+        </select>
+    </div>
+
+    <button id="apply-filter">Применить</button>
+</section>
+
+
     <!-- Меню -->
     <section class="menu">
         <h2>Закуски</h2>
@@ -320,7 +347,7 @@ function Accumulator(startingValue) {
         updateCartCounter();
     };
 }
-
+//!!!!!!!!!!!!!!!! НЕ РАБОТАЕТ СОРТИРОВКА ПО ВОЗРАСТАНИЮ/УБЫВАНИЮ
 // Создаём счётчик, загружаем из localStorage
 let acc = new Accumulator(Number(localStorage.getItem("cartCount")) || 0);
 
@@ -331,6 +358,124 @@ function updateCartCounter() {
 }
 
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // собираем карточки (свежая сборка на момент вызова)
+  const allItems = Array.from(document.querySelectorAll('.menu-item')).map(elem => {
+    const priceText = elem.querySelector('.price')?.textContent || '';
+    // извлекаем число из текста цены, например "590 ₽"
+    const price = Number(priceText.replace(/\D/g, '')) || 0;
+    return { elem, name: elem.querySelector('h3')?.textContent || '', price };
+  });
+
+  // вспомогательная функция: привязать add-to-cart к кнопке внутри переданного элемента (elem может быть оригинал или клон)
+  function bindAddToCartOnElement(elem) {
+    const btn = elem.querySelector('.add-to-cart');
+    if (!btn) return;
+    // удаляем потенциальные старые обработчики, затем навешиваем новый.
+    // Удалять точные слушатели сложно; мы переходим по другому: клонирование не переносит слушатели, но если вдруг — перестрахуемся.
+    btn.replaceWith(btn.cloneNode(true));
+    const newBtn = elem.querySelector('.add-to-cart');
+    newBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const item = {
+        name: newBtn.dataset.name,
+        price: Number(newBtn.dataset.price),
+        image: newBtn.dataset.image
+      };
+      addToCart(item);
+      // анимация — используем картинку внутри той же карточки (elem)
+      const img = elem.querySelector('img');
+      if (img) flyAnimation(img);
+      // обновляем acc и т.д. (если acc есть в глобальной области)
+      if (typeof acc !== 'undefined') acc.read(1);
+    });
+  }
+
+  // функция фильтра/сортировки
+  function filterAndSortMenu() {
+    const min = Number(document.getElementById('price-min').value) || 0;
+    const max = Number(document.getElementById('price-max').value);
+    const maxVal = isFinite(max) && max > 0 ? max : Infinity;
+    const sort = document.getElementById('sort-select').value;
+
+    // определим, нужен ли вообще фильтр/сортировка
+    const noFilter = (min === 0 && maxVal === Infinity && (sort === 'none' || !sort));
+    const menuSection = document.querySelector('.menu');
+
+    // если нет фильтра — восстановим исходные сетки и удалим результаты
+    if (noFilter) {
+      // покажем исходные сетки
+      document.querySelectorAll('.menu-grid').forEach(g => g.style.display = '');
+      const existing = document.getElementById('filter-results-container');
+      if (existing) existing.remove();
+      return;
+    }
+
+    // фильтрация
+    let filtered = allItems.filter(item => item.price >= min && item.price <= maxVal);
+
+    // сортировка
+    if (sort === 'asc') filtered.sort((a, b) => a.price - b.price);
+    if (sort === 'desc') filtered.sort((a, b) => b.price - a.price);
+
+    // скрываем исходные сетки, чтобы не было дубликатов
+    document.querySelectorAll('.menu-grid').forEach(g => g.style.display = 'none');
+
+    // создаём или находим контейнер результатов
+    let resultsContainer = document.getElementById('filter-results-container');
+    if (!resultsContainer) {
+      resultsContainer = document.createElement('div');
+      resultsContainer.id = 'filter-results-container';
+      resultsContainer.className = 'menu-grid';
+      // вставляем контейнер в начало секции .menu (после заголовка)
+      const menuHeader = menuSection.querySelector('h2');
+      if (menuHeader && menuHeader.parentElement) {
+        menuSection.insertBefore(resultsContainer, menuHeader.nextElementSibling);
+      } else {
+        menuSection.insertBefore(resultsContainer, menuSection.firstChild);
+      }
+    } else {
+      resultsContainer.innerHTML = '';
+    }
+
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = '<p style="padding:20px; color:#666">Ничего не найдено по заданным критериям.</p>';
+      return;
+    }
+
+    // добавляем карточки-клоны в resultsContainer в нужном порядке
+    filtered.forEach(item => {
+      const clone = item.elem.cloneNode(true);
+
+      // опционально: можно пометить клон, чтобы избежать дублей
+      clone.classList.add('filtered-clone');
+
+      // привязываем обработчик add-to-cart к клону
+      bindAddToCartOnElement(clone);
+
+      // добавляем в контейнер
+      resultsContainer.appendChild(clone);
+    });
+  }
+
+  // навешиваем кнопку
+  const applyBtn = document.getElementById('apply-filter');
+  if (applyBtn) applyBtn.addEventListener('click', filterAndSortMenu);
+
+  // (опционально) — применяем при нажатии Enter в полях
+  document.getElementById('price-min').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') filterAndSortMenu();
+  });
+  document.getElementById('price-max').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') filterAndSortMenu();
+  });
+
+}); // DOMContentLoaded
+</script>
+
 
 </body>
 </html>
