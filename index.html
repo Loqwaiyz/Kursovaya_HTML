@@ -219,18 +219,15 @@ generateLettersCaptcha();
                 <li><a href="cart.html">Корзина</a></li>
             </ul>
         </nav>
-        <div class="notification">
-            <div class="icon">
-                <i class="bell">🔔</i>
-                <span class="count">4</span>
-            </div>
-            <div class="dropdown">
-                <div class="item">1  List Item 1</div>
-                <div class="item">2  List Item 2</div>
-                <div class="item">3  List Item 3</div>
-                <div class="item">4  List Item 4</div>
-            </div>
-        </div>
+        <div class="notifications-panel">
+          <div id="notify-btn" class="notify-button">
+            🔔
+            <span id="notify-count" class="notify-count">0</span>
+          </div>
+
+        <div id="notifications-list" class="notifications-list"></div>
+</div>
+
     </header>
 
     <!-- Главный баннер -->
@@ -290,5 +287,48 @@ generateLettersCaptcha();
             });
         });
     </script>
+<script>
+// ====== УВЕДОМЛЕНИЯ ======
+let notifyCount = 0;
+let intervalId;
+
+// Функция добавления уведомления
+function showNotification(text) {
+    const box = document.getElementById("notifications-list");
+
+    const elem = document.createElement("div");
+    elem.className = "notification-item";
+    elem.textContent = text;
+
+    box.appendChild(elem);
+
+    // исчезает через 1.5 сек
+    setTimeout(() => elem.remove(), 1500);
+}
+
+// Старт авто-уведомлений каждые 3 секунды
+function startNotifications() {
+    intervalId = setInterval(() => {
+        notifyCount++;
+        document.getElementById("notify-count").textContent = notifyCount;
+
+        showNotification("Новое уведомление #" + notifyCount);
+    }, 3000);
+}
+
+startNotifications();
+
+// Пауза уведомлений на 10 сек
+document.getElementById("notify-btn").addEventListener("click", () => {
+    clearInterval(intervalId);
+    showNotification("Пауза на 10 секунд...");
+
+    setTimeout(() => {
+        startNotifications();
+        showNotification("Счётчик возобновлён!");
+    }, 10000);
+});
+</script>
+
 </body>
 </html>
