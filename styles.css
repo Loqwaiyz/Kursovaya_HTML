@@ -276,71 +276,28 @@ nav.active {
   transform: scale(1.05);
 }
 
-/* Колокол (уведомления) */
-
 /* панель уведомлений */
-.notifications-panel {
+
+#notifications-list {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    margin-left: 15px;
-    position: relative;
+    gap: 10px;
 }
 
-/* иконка */
-.notify-icon {
-    position: relative;
-    font-size: 22px;
-    cursor: pointer;
-    user-select: none;
-    line-height: 1;
-}
-
-/* кружок-счётчик */
-.notify-count {
-    background: #d60000;
+/* Стиль самого уведомления */
+.notification-item {
+    background: #8c0000;
     color: white;
-    padding: 2px 6px;
-    border-radius: 50%;
-    font-size: 11px;
-    font-weight: 700;
-    position: absolute;
-    top: -6px;
-    right: -10px;
-    min-width: 18px;
-    text-align: center;
-}
-
-/* список уведомлений */
-.notifications-list {
-    margin-top: 12px;
-    display: none;
-    background: white;
-    color: black;
-    border-radius: 10px;
-    padding: 12px;
-    min-width: 200px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-    position: absolute;
-    top: 30px;
-    right: 0;
-    z-index: 2000;
-}
-
-.notifications-list.visible {
-    display: block;
-}
-
-/* стиль каждого уведомления */
-.notifications-list .notif-item {
-    padding: 8px 5px;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
-    text-align: left;
-}
-
-.notifications-list .notif-item:last-child {
-    border-bottom: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity 1.5s ease-out; /* Время исчезновения */
+    min-width: 250px;
 }
 
 /* На телефоне notifications-панель уходит вправо, НЕ ломая бургер */
@@ -887,6 +844,36 @@ section {
             text-align: center;
             color: #444;
         }
+
+.notif-item {
+    padding: 8px 5px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    position: relative;
+}
+
+.notif-close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #900;
+}
+
+.notif-close:hover {
+    color: red;
+}
+
+.parallax {
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 350px;
+}
+
 
 /* Подвал */
 footer {
